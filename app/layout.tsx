@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
-import "./reset.css";
 import "./globals.css";
 
 import Sidebar from "./_components/Sidebar";
@@ -25,14 +24,14 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${notoSansKR.className} antialiased bg-gray-50 text-slate-900`}
+        className={`${notoSansKR.variable} bg-bg-page text-text-main antialiased`}
       >
-        <Sidebar />
-        <main className="flex-1">
-          <div className="mx-auto max-w-7xl px-6 py-6 md:px-8 md:py-8">
+        <div className="flex min-h-screen">
+          <Sidebar />
+          <main className="flex-1 ml-64 p-8 w-full max-w-[1600px] mx-auto transition-all">
             {children}
-          </div>
-        </main>
+          </main>
+        </div>
       </body>
     </html>
   );
