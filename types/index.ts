@@ -14,6 +14,11 @@ export interface Merchant {
   status: "READY" | "ACTIVE" | "INACTIVE" | "CLOSED";
   bizType: string;
   bizNo?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  registeredAt?: string;
+  updatedAt?: string;
 }
 
 export interface ApiResponse<T> {
