@@ -3,6 +3,8 @@ import { Noto_Sans_KR } from "next/font/google";
 import "./reset.css";
 import "./globals.css";
 
+import Sidebar from "./_components/Sidebar";
+
 const notoSansKR = Noto_Sans_KR({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin", "latin-ext"],
@@ -21,10 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={notoSansKR.variable}>
-      <body className="flex min-h-screen bg-gray-100">
+    <html lang="ko">
+      <body
+        className={`${notoSansKR.className} antialiased bg-gray-50 text-slate-900`}
+      >
+        <Sidebar />
         <main className="flex-1">
-          <div className="mx-auto max-w-6xl px-6 py-6 md:px-8 md:py-8">
+          <div className="mx-auto max-w-7xl px-6 py-6 md:px-8 md:py-8">
             {children}
           </div>
         </main>
