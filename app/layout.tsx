@@ -13,6 +13,9 @@ const notoSansKR = Noto_Sans_KR({
 export const metadata: Metadata = {
   title: "PG Dashboard",
   description: "(주)올페이즈 프론트엔드 채용 과제",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

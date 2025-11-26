@@ -91,7 +91,7 @@ export default function Sidebar() {
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={cn(
-            "flex items-center justify-center rounded-lg text-text-sub hover:bg-bg-sub hover:text-text-main transition-colors",
+            "flex items-center justify-center rounded-lg text-text-sub hover:bg-bg-sub hover:text-text-main transition-colors cursor-pointer",
             isCollapsed ? "w-full py-3" : "p-2"
           )}
         >
