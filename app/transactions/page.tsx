@@ -6,7 +6,6 @@ import { Payment } from "@/types";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 
-// 결제 수단 매핑
 const PAYMENT_TYPE_MAP: Record<string, string> = {
   ONLINE: "온라인",
   DEVICE: "단말기",
@@ -15,7 +14,6 @@ const PAYMENT_TYPE_MAP: Record<string, string> = {
   BILLING: "정기결제",
 };
 
-// 결제 상태 매핑
 const PAYMENT_STATUS_MAP: Record<string, string> = {
   PENDING: "결제 대기",
   SUCCESS: "결제 완료",

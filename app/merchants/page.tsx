@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { fetchMerchants } from "@/lib/api";
 import { Merchant } from "@/types";
@@ -49,9 +50,11 @@ export default function MerchantsPage() {
               {m.mchtCode}
             </p>
 
-            <button className="w-full py-2.5 text-sm font-semibold text-text-sub bg-bg-sub rounded-xl hover:bg-gray-200 transition-colors">
-              상세 보기
-            </button>
+            <Link href={`/merchants/${m.mchtCode}`} className="block w-full">
+              <button className="w-full py-2.5 text-sm font-semibold text-text-sub bg-bg-sub rounded-xl hover:bg-brand hover:text-white transition-colors cursor-pointer">
+                상세 보기
+              </button>
+            </Link>
           </div>
         ))}
       </div>
