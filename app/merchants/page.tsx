@@ -5,6 +5,11 @@ import { useEffect, useState } from "react";
 import { fetchMerchants } from "@/lib/api";
 import { Merchant } from "@/types";
 import { cn } from "@/lib/utils";
+import {
+  MERCHANT_STATUS_MAP,
+  BIZ_TYPE_MAP,
+  MERCHANT_STATUS_COLOR_MAP,
+} from "@/lib/constants";
 
 export default function MerchantsPage() {
   const [merchants, setMerchants] = useState<Merchant[]>([]);
@@ -32,15 +37,14 @@ export default function MerchantsPage() {
               <span
                 className={cn(
                   "px-2.5 py-1 rounded-lg text-xs font-bold border",
-                  m.status === "ACTIVE"
-                    ? "bg-blue-50 text-brand border-blue-100"
-                    : "bg-gray-100 text-text-sub border-gray-200"
+                  MERCHANT_STATUS_COLOR_MAP[m.status] ||
+                    "bg-gray-100 text-gray-600 border-gray-200"
                 )}
               >
-                {m.status}
+                {MERCHANT_STATUS_MAP[m.status] || m.status}
               </span>
               <span className="text-xs text-text-muted font-mono bg-bg-sub px-2 py-1 rounded-md">
-                {m.bizType}
+                {BIZ_TYPE_MAP[m.bizType] || m.bizType}
               </span>
             </div>
             <h3 className="font-bold text-lg text-text-main mb-1 group-hover:text-brand transition-colors">

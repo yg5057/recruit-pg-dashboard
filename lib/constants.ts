@@ -39,3 +39,11 @@ export const BIZ_TYPE_MAP: Record<string, string> = {
   EDU: "교육/학원",
   TEST: "테스트",
 };
+
+// 가맹점 상태별 뱃지 색상
+export const MERCHANT_STATUS_COLOR_MAP: Record<string, string> = {
+  ACTIVE: "bg-blue-50 text-brand border-blue-100",
+  READY: "bg-yellow-50 text-yellow-700 border-yellow-100",
+  INACTIVE: "bg-orange-50 text-orange-700 border-orange-100",
+  CLOSED: "bg-gray-100 text-text-sub border-gray-200",
+};

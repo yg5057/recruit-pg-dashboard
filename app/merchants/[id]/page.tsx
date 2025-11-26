@@ -15,23 +15,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const STATUS_MAP: Record<string, string> = {
-  ACTIVE: "영업중",
-  READY: "오픈 준비",
-  INACTIVE: "휴업",
-  CLOSED: "폐업",
-};
-
-const BIZ_TYPE_MAP: Record<string, string> = {
-  CAFE: "카페/식음료",
-  SHOP: "쇼핑몰",
-  MART: "마트/유통",
-  APP: "IT/플랫폼",
-  TRAVEL: "여행/숙박",
-  EDU: "교육/학원",
-  TEST: "테스트",
-};
+import { MERCHANT_STATUS_MAP, BIZ_TYPE_MAP } from "@/lib/constants";
 
 export default function MerchantDetailPage() {
   const params = useParams();
@@ -98,7 +82,7 @@ export default function MerchantDetailPage() {
                       : "bg-orange-50 text-orange-600 border-orange-100"
                   )}
                 >
-                  {STATUS_MAP[merchant.status] || merchant.status}
+                  {MERCHANT_STATUS_MAP[merchant.status] || merchant.status}
                 </span>
               </div>
               <p className="text-text-muted font-mono text-sm">

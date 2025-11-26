@@ -5,21 +5,11 @@ import { fetchPayments } from "@/lib/api";
 import { Payment } from "@/types";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-
-const PAYMENT_TYPE_MAP: Record<string, string> = {
-  ONLINE: "온라인",
-  DEVICE: "단말기",
-  MOBILE: "모바일",
-  VACT: "가상계좌",
-  BILLING: "정기결제",
-};
-
-const PAYMENT_STATUS_MAP: Record<string, string> = {
-  PENDING: "결제 대기",
-  SUCCESS: "결제 완료",
-  FAILED: "결제 실패",
-  CANCELLED: "환불 완료",
-};
+import {
+  PAYMENT_STATUS_MAP,
+  PAYMENT_TYPE_MAP,
+  STATUS_COLOR_MAP,
+} from "@/lib/constants";
 
 export default function TransactionsPage() {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -77,14 +67,8 @@ export default function TransactionsPage() {
                     <span
                       className={cn(
                         "px-2.5 py-1 rounded-lg text-xs font-semibold border",
-                        p.status === "SUCCESS" &&
-                          "bg-emerald-50 text-emerald-700 border-emerald-100",
-                        p.status === "FAILED" &&
-                          "bg-rose-50 text-rose-700 border-rose-100",
-                        p.status === "CANCELLED" &&
-                          "bg-orange-50 text-orange-700 border-orange-100",
-                        p.status === "PENDING" &&
-                          "bg-gray-50 text-gray-700 border-gray-200"
+                        STATUS_COLOR_MAP[p.status] ||
+                          "bg-gray-100 text-gray-700 border-gray-200"
                       )}
                     >
                       {PAYMENT_STATUS_MAP[p.status] || p.status}
