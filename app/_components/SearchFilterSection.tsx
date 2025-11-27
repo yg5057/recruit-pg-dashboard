@@ -1,7 +1,7 @@
 "use client";
 
 import { ChangeEvent } from "react";
-import { Search, CreditCard } from "lucide-react";
+import { Search, LucideIcon, Filter } from "lucide-react";
 import CustomDropdown from "./CustomDropdown";
 
 export interface FilterConfig {
@@ -19,6 +19,7 @@ interface SearchFilterSectionProps {
   totalItems: number;
   title?: string;
   description?: string;
+  icon?: LucideIcon;
 }
 
 export default function SearchFilterSection({
@@ -29,11 +30,12 @@ export default function SearchFilterSection({
   totalItems,
   title = "필터 및 검색",
   description = "목록을 검색하고 필터링하세요.",
+  icon: Icon = Filter,
 }: SearchFilterSectionProps) {
   return (
     <div className="rounded-3xl border border-border bg-bg-surface p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-2">
-        <CreditCard size={20} className="text-text-sub" />
+        <Icon size={20} className="text-text-sub" />
         <h3 className="text-lg font-bold text-text-main">{title}</h3>
       </div>
       <p className="text-sm text-text-muted mb-6">{description}</p>

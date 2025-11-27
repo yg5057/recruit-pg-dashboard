@@ -45,8 +45,8 @@ export default function CustomDropdown({
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center justify-between w-full md:w-48 px-4 py-2.5 bg-bg-page border border-border rounded-xl text-sm transition-all",
-          "focus:outline-none focus:ring-2 focus:ring-brand/20 cursor-pointer",
+          "flex items-center justify-between w-full md:w-48 px-4 py-2.5 bg-bg-page border border-border rounded-xl text-sm transition-all cursor-pointer",
+          "focus:outline-none focus:ring-2 focus:ring-brand/20",
           isOpen ? "border-brand ring-2 ring-brand/20" : "hover:border-text-sub"
         )}
       >

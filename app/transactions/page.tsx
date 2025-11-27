@@ -6,6 +6,7 @@ import { fetchPayments } from "@/lib/api";
 import { Payment } from "@/types";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { CreditCard } from "lucide-react";
 import {
   PAYMENT_STATUS_MAP,
   PAYMENT_TYPE_MAP,
@@ -107,7 +108,8 @@ export default function TransactionsPage() {
 
       <SearchFilterSection
         title="거래 내역 검색"
-        description="원하는 거래 내역을 빠르게 찾아보세요."
+        icon={CreditCard}
+        description="원하시는 거래 내역을 빠르게 찾아보세요."
         searchTerm={searchTerm}
         onSearchChange={handleSearchChange}
         searchPlaceholder="거래코드 또는 가맹점코드 검색..."
