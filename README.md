@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ㈜올페이즈 프론트엔드 개발자 채용과제 - PG 대시보드
 
-## Getting Started
+제공된 채용 전용 API를 활용하여 결제 및 가맹점 데이터를 시각화하는 PG 도메인 대시보드 프로젝트입니다.
 
-First, run the development server:
+## 1. 프로젝트 개요
+
+- **주제:** 결제/가맹점 데이터 시각화 대시보드
+
+## 2. 기술 스택
+
+본 프로젝트는 다음 기술 스택을 사용하여 구축되었습니다.
+
+| 분류            | 기술                   | 비고                           |
+| :-------------- | :--------------------- | :----------------------------- |
+| **Runtime**     | Node.js (v20.19.5 LTS) | 필수 요구사항 준수             |
+| **Framework**   | Next.js (App Router)   | 필수 요구사항 준수 (React 18+) |
+| **Language**    | TypeScript             |                                |
+| **Styling**     | Tailwind CSS           |                                |
+| **HTTP Client** | Axios                  | API 통신                       |
+| **Icons**       | Lucide React           | 아이콘 라이브러리              |
+| **Date Utils**  | date-fns               | 날짜 데이터 포맷팅             |
+| **Charts**      | recharts               | 차트 라이브러리                |
+| **UI Utils**    | clsx, tailwind-merge   | 클래스명 조합 유틸리티         |
+
+## 3. 개발 환경 및 실행 방법
+
+본 프로젝트는 **Node.js v20.19.5 LTS** 환경에서 실행하는 것을 기준으로 합니다.
+
+### 3.1. 설치 및 실행
+
+본 프로젝트는 **npm**을 패키지 매니저로 사용합니다.
 
 ```bash
+# 레포지토리 클론 (필요 시)
+git clone https://github.com/yg5057/recruit-pg-dashboard.git
+cd recruit-pg-dashboard
+
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 실행 후 브라우저에서 http://localhost:3000으로 접속하여 확인합니다.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 4. 환경 변수 설정
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- API 엔드포인트 설정이 필요합니다.
+- 프로젝트 루트 경로에 `.env` 파일을 생성하고 아래 내용을 작성해 주세요.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
+```
 
-## Learn More
+### 5.1. 필수 구현 페이지
 
-To learn more about Next.js, take a look at the following resources:
+- **대시보드 (Dashboard) - `/`:**
+  - **주요 지표 요약**: 총 거래액, 전체 거래 수, 성공 건수, 실패율을 계산하여 상단 카드 형태로 표시합니다.
+  - **거래 추이 차트**: 일별 거래 추이를 시각화한 차트를 제공합니다. (Recharts 라이브러리 사용)
+  - **최근 거래 내역**: 가장 최근에 발생한 결제 거래 5건을 요약하여 보여줍니다.
+- **거래 내역 (Transaction) - `/transactions`:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+  - **전체 조회**: API를 통해 전체 결제 내역을 조회하고 테이블 형태로 표시합니다.
+  - **검색 및 필터링**: 거래코드/가맹점코드 검색 및 결제 상태, 결제 수단별 필터링 기능을 제공합니다.
+  - **페이지네이션**: 필터링된 데이터를 기준으로 클라이언트 사이드 페이지네이션(10건 단위)을 구현했습니다.
+  - **상세 이동**: 각 거래 행을 클릭하면 해당 가맹점의 상세 페이지로 이동합니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **가맹점 관리 (Merchants) - `/merchants`:**
 
-## Deploy on Vercel
+  - **가맹점 목록**: 등록된 전체 가맹점을 카드 형태로 조회합니다.
+  - **검색 및 필터링**: 가맹점명/코드 검색 및 가맹점 상태, 업종별 필터링 기능을 제공합니다.
+  - 가맹점 상태에 따라 색상이 구분된 뱃지를 표시합니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **가맹점 상세 정보 (Merchant Detail) - `/merchants/[id]`:**
+  - 특정 가맹점의 기본 정보(사업자번호, 업종 등)와 연락처 정보(주소, 전화번호, 이메일)를 상세하게 조회합니다.
+  - 가맹점 상태에 따라 색상이 구분된 뱃지를 표시합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 6. UI/UX 디자인 및 템플릿 사용 여부
+
+별도의 상용 UI 템플릿 없이 Tailwind CSS를 활용하여 디자인 및 레이아웃을 구성했습니다.
+
+- **디자인 의도 및 UI/UX 포인트 요약:**
+  - PG 서비스의 전문성과 신뢰감을 주기 위해 깔끔한 화이트/블루 톤의 컬러를 사용함.
+  - 로고와 favicon은 생성형 AI를 활용하여 제작 하였음.
+  - 반응형 사이드바 레이아웃을 적용하여 정보 접근성을 높였으며, 검색/필터링 기능을 페이지 상단에 통일성 있게 배치하여 사용자가 데이터를 쉽고 직관적으로 탐색할 수 있도록 설계하였음.
+  - 반복되는 UI 요소(검색 필터, 페이지네이션 등)를 공통 컴포넌트로 분리하여 재사용이 가능하게 설계함.
+
+---
+
+## 7. 프로젝트 구조 (Directory Structure)
+
+```bash
+.
+├── app/
+│   ├── _components/        # 전역 공통 컴포넌트 (Sidebar, Pagination, SearchFilterSection, DashboardChart 등)
+│   ├── merchants/          # 가맹점 관리 관련 페이지 (목록, 상세)
+│   ├── transactions/       # 거래 내역 페이지
+│   ├── layout.tsx          # 루트 레이아웃 (Sidebar 포함)
+│   └── page.tsx            # 대시보드 메인 페이지
+├── lib/
+│   ├── api.ts              # API 호출 로직 및 Axios 인스턴스
+│   ├── constants.ts        # 상수 데이터 (상태/업종 한글 매핑, 색상 정보 등 중앙 관리)
+│   └── utils.ts            # 공통 유틸리티 함수 (cn)
+├── public/                 # 정적 파일 (로고 svg, favicon)
+└── types/                  # TypeScript 타입 정의 (Payment, Merchant 등 API 응답 타입)
+```
