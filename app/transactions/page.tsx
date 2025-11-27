@@ -11,8 +11,10 @@ import {
   PAYMENT_TYPE_MAP,
   STATUS_COLOR_MAP,
 } from "@/lib/constants";
-import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
-import CustomDropdown from "../_components/CustomDropdown";
+import SearchFilterSection, {
+  FilterConfig,
+} from "@/app/_components/SearchFilterSection";
+import Pagination from "@/app/_components/Pagination";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -23,7 +25,6 @@ export default function TransactionsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -49,6 +50,10 @@ export default function TransactionsPage() {
     setCurrentPage(1);
   };
 
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
   const filteredPayments = useMemo(() => {
     return payments.filter((p) => {
       const matchesSearch =
@@ -72,11 +77,20 @@ export default function TransactionsPage() {
     return filteredPayments.slice(startIndex, endIndex);
   }, [filteredPayments, currentPage]);
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
+  const transactionFilters: FilterConfig[] = [
+    {
+      value: statusFilter,
+      onChange: handleStatusFilterChange,
+      options: PAYMENT_STATUS_MAP,
+      placeholder: "전체 상태",
+    },
+    {
+      value: typeFilter,
+      onChange: handleTypeFilterChange,
+      options: PAYMENT_TYPE_MAP,
+      placeholder: "전체 수단",
+    },
+  ];
 
   return (
     <div className="space-y-6 pb-10">
@@ -91,48 +105,15 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-border bg-bg-surface p-6 shadow-sm">
-        <div className="flex items-center gap-2 mb-2">
-          <Filter size={20} className="text-text-sub" />
-          <h3 className="text-lg font-bold text-text-main">필터 및 검색</h3>
-        </div>
-        <p className="text-sm text-text-muted mb-6">
-          거래 내역을 검색하고 필터링하세요.
-        </p>
-
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center mb-6">
-          <div className="relative w-full md:w-96">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search size={18} className="text-text-muted" />
-            </div>
-            <input
-              type="text"
-              placeholder="거래코드 또는 가맹점코드 검색..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-              className="w-full pl-10 pr-4 py-2.5 bg-bg-page border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 transition-shadow"
-            />
-          </div>
-
-          <CustomDropdown
-            value={statusFilter}
-            onChange={handleStatusFilterChange}
-            options={PAYMENT_STATUS_MAP}
-            placeholder="전체 상태"
-          />
-
-          <CustomDropdown
-            value={typeFilter}
-            onChange={handleTypeFilterChange}
-            options={PAYMENT_TYPE_MAP}
-            placeholder="전체 수단"
-          />
-        </div>
-
-        <p className="text-text-main font-medium">
-          총 <span className="font-bold">{totalItems}</span>건의 거래
-        </p>
-      </div>
+      <SearchFilterSection
+        title="거래 내역 검색"
+        description="원하는 거래 내역을 빠르게 찾아보세요."
+        searchTerm={searchTerm}
+        onSearchChange={handleSearchChange}
+        searchPlaceholder="거래코드 또는 가맹점코드 검색..."
+        filters={transactionFilters}
+        totalItems={totalItems}
+      />
 
       <div className="rounded-3xl border border-border bg-bg-surface shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
@@ -201,46 +182,11 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      {totalPages > 0 && (
-        <div className="flex items-center justify-center pt-4">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              className="p-2 rounded-lg border border-border bg-bg-surface text-text-sub hover:bg-bg-sub disabled:opacity-50 disabled:hover:bg-bg-surface transition-colors cursor-pointer disabled:cursor-default shrink-0"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <div className="flex items-center gap-1 overflow-x-auto max-w-[calc(100vw-160px)] md:max-w-none scrollbar-hide">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <button
-                    key={page}
-                    onClick={() => handlePageChange(page)}
-                    className={cn(
-                      "min-w-9 h-9 px-2 rounded-lg text-sm font-medium transition-colors shrink-0 cursor-pointer",
-                      currentPage === page
-                        ? "bg-brand text-white"
-                        : "text-text-sub hover:bg-bg-sub"
-                    )}
-                  >
-                    {page}
-                  </button>
-                )
-              )}
-            </div>
-
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className="p-2 rounded-lg border border-border bg-bg-surface text-text-sub hover:bg-bg-sub disabled:opacity-50 disabled:hover:bg-bg-surface transition-colors cursor-pointer disabled:cursor-default shrink-0"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 }
