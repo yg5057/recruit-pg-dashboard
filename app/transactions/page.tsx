@@ -12,6 +12,7 @@ import {
   STATUS_COLOR_MAP,
 } from "@/lib/constants";
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
+import CustomDropdown from "../_components/CustomDropdown";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -22,6 +23,7 @@ export default function TransactionsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
+
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -37,13 +39,13 @@ export default function TransactionsPage() {
     setCurrentPage(1);
   };
 
-  const handleStatusFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setStatusFilter(e.target.value);
+  const handleStatusFilterChange = (value: string) => {
+    setStatusFilter(value);
     setCurrentPage(1);
   };
 
-  const handleTypeFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    setTypeFilter(e.target.value);
+  const handleTypeFilterChange = (value: string) => {
+    setTypeFilter(value);
     setCurrentPage(1);
   };
 
@@ -112,31 +114,19 @@ export default function TransactionsPage() {
             />
           </div>
 
-          <select
+          <CustomDropdown
             value={statusFilter}
             onChange={handleStatusFilterChange}
-            className="px-4 py-2.5 bg-bg-page border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 transition-shadow cursor-pointer text-text-main"
-          >
-            <option value="">전체 상태</option>
-            {Object.entries(PAYMENT_STATUS_MAP).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value}
-              </option>
-            ))}
-          </select>
+            options={PAYMENT_STATUS_MAP}
+            placeholder="전체 상태"
+          />
 
-          <select
+          <CustomDropdown
             value={typeFilter}
             onChange={handleTypeFilterChange}
-            className="px-4 py-2.5 bg-bg-page border border-border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand/20 transition-shadow cursor-pointer text-text-main"
-          >
-            <option value="">전체 수단</option>
-            {Object.entries(PAYMENT_TYPE_MAP).map(([key, value]) => (
-              <option key={key} value={key}>
-                {value}
-              </option>
-            ))}
-          </select>
+            options={PAYMENT_TYPE_MAP}
+            placeholder="전체 수단"
+          />
         </div>
 
         <p className="text-text-main font-medium">
@@ -221,6 +211,7 @@ export default function TransactionsPage() {
             >
               <ChevronLeft size={20} />
             </button>
+
             <div className="flex items-center gap-1 overflow-x-auto max-w-[calc(100vw-160px)] md:max-w-none scrollbar-hide">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => (
@@ -239,6 +230,7 @@ export default function TransactionsPage() {
                 )
               )}
             </div>
+
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
