@@ -24,9 +24,9 @@ export const STATUS_COLOR_MAP: Record<string, string> = {
 
 // 가맹점 관련 매핑
 export const MERCHANT_STATUS_MAP: Record<string, string> = {
-  ACTIVE: "영업중",
-  READY: "오픈 준비",
-  INACTIVE: "휴업",
+  ACTIVE: "영업",
+  READY: "대기",
+  INACTIVE: "중단",
   CLOSED: "폐업",
 };
 

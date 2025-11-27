@@ -12,10 +12,13 @@ import {
   Mail,
   ArrowLeft,
   CreditCard,
-  MoreHorizontal,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { MERCHANT_STATUS_MAP, BIZ_TYPE_MAP } from "@/lib/constants";
+import {
+  MERCHANT_STATUS_MAP,
+  BIZ_TYPE_MAP,
+  MERCHANT_STATUS_COLOR_MAP,
+} from "@/lib/constants";
 
 export default function MerchantDetailPage() {
   const params = useParams();
@@ -49,14 +52,14 @@ export default function MerchantDetailPage() {
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
-      <div className="flex items-center gap-4 mb-2">
+      <div className="flex items-center gap-2 mb-8">
         <button
           onClick={() => router.back()}
-          className="p-2 rounded-full hover:bg-bg-sub text-text-sub transition-colors"
+          className="p-2 rounded-full hover:bg-blue-100 hover:text-brand-hover text-text-sub transition-colors cursor-pointer"
         >
-          <ArrowLeft size={24} />
+          <ArrowLeft size={20} />
         </button>
-        <h2 className="text-2xl font-bold text-text-main tracking-tight">
+        <h2 className="text-xl font-bold text-text-main tracking-tight">
           가맹점 상세 정보
         </h2>
       </div>
@@ -75,11 +78,8 @@ export default function MerchantDetailPage() {
                 <span
                   className={cn(
                     "px-2.5 py-0.5 rounded-md text-xs font-bold border",
-                    merchant.status === "ACTIVE"
-                      ? "bg-blue-50 text-brand border-blue-100"
-                      : merchant.status === "CLOSED"
-                      ? "bg-gray-100 text-text-sub border-gray-200"
-                      : "bg-orange-50 text-orange-600 border-orange-100"
+                    MERCHANT_STATUS_COLOR_MAP[merchant.status] ||
+                      "bg-gray-100 text-text-sub border-gray-200"
                   )}
                 >
                   {MERCHANT_STATUS_MAP[merchant.status] || merchant.status}
@@ -90,18 +90,9 @@ export default function MerchantDetailPage() {
               </p>
             </div>
           </div>
-
-          <div className="flex gap-2">
-            <button className="px-4 py-2 rounded-xl bg-brand text-white text-sm font-semibold hover:bg-brand-hover transition shadow-sm shadow-blue-100">
-              정보 수정
-            </button>
-            <button className="px-3 py-2 rounded-xl border border-border text-text-sub hover:bg-bg-sub transition">
-              <MoreHorizontal size={20} />
-            </button>
-          </div>
         </div>
 
-        <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+        <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
           <div className="space-y-6">
             <h3 className="text-lg font-bold text-text-main mb-4 flex items-center gap-2">
               <CreditCard size={20} className="text-text-muted" />
@@ -137,7 +128,7 @@ export default function MerchantDetailPage() {
             </h3>
 
             <div className="space-y-4">
-              <div className="flex gap-4 items-start">
+              <div className="flex gap-4 items-center">
                 <div className="w-8 h-8 rounded-lg bg-bg-sub flex items-center justify-center text-text-sub shrink-0">
                   <MapPin size={16} />
                 </div>
