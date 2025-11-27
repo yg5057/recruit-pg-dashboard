@@ -19,7 +19,7 @@ export default function MerchantsPage() {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-10">
       <div>
         <h2 className="text-2xl font-bold tracking-tight text-text-main">
           가맹점 관리
@@ -27,7 +27,7 @@ export default function MerchantsPage() {
         <p className="text-text-muted mt-1">등록된 가맹점 목록을 관리합니다.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {merchants.map((m) => (
           <div
             key={m.mchtCode}
@@ -55,13 +55,23 @@ export default function MerchantsPage() {
             </p>
 
             <Link href={`/merchants/${m.mchtCode}`} className="block w-full">
-              <button className="w-full py-2.5 text-sm font-semibold text-text-sub bg-bg-sub rounded-xl hover:bg-brand hover:text-white transition-colors cursor-pointer">
+              <button className="w-full py-2.5 text-sm font-semibold text-text-sub bg-bg-sub rounded-lg hover:bg-brand hover:text-white transition-colors cursor-pointer">
                 상세 보기
               </button>
             </Link>
           </div>
         ))}
       </div>
+
+      {merchants.length > 0 && (
+        <div className="flex flex-col items-center justify-center py-4 text-text-muted text-sm text-center">
+          <p>모든 가맹점을 불러왔습니다.</p>
+          <p>
+            (총 <span className="font-medium">{merchants.length}</span>개
+            가맹점)
+          </p>
+        </div>
+      )}
     </div>
   );
 }

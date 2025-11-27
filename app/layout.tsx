@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <div className="flex min-h-screen">
           <Sidebar />
-          <main className="flex-1 w-full max-w-[1600px] mx-auto p-8 transition-all duration-300 ease-in-out ml-64 peer-data-[collapsed=true]:ml-20">
+          <main className="flex-1 w-full mx-auto p-8 transition-all duration-300 ease-in-out ml-64 peer-data-[collapsed=true]:ml-20">
             {children}
           </main>
         </div>
