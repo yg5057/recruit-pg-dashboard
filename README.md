@@ -5,6 +5,7 @@
 ## 1. 프로젝트 개요
 
 - **주제:** 결제/가맹점 데이터 시각화 대시보드
+- **배포 주소:** [https://recruit-pg-dashboard.vercel.app/](https://recruit-pg-dashboard.vercel.app/)
 
 ## 2. 기술 스택
 
