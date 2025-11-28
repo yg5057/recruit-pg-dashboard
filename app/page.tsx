@@ -74,11 +74,6 @@ export default function DashboardPage() {
       .slice(0, 5);
   }, [payments]);
 
-  if (isLoading)
-    return (
-      <div className="p-10 flex justify-center text-brand">Loading...</div>
-    );
-
   return (
     <div className="space-y-8">
       <div>
@@ -103,9 +98,13 @@ export default function DashboardPage() {
                 <p className="text-sm font-medium text-text-muted mb-1">
                   {stat.title}
                 </p>
-                <p className="text-2xl font-bold text-text-main">
-                  {stat.value}
-                </p>
+                {isLoading ? (
+                  <div className="h-8 w-24 bg-bg-sub/50 animate-pulse rounded-md mt-1" />
+                ) : (
+                  <p className="text-2xl font-bold text-text-main">
+                    {stat.value}
+                  </p>
+                )}
               </div>
             </div>
           </div>
@@ -114,13 +113,10 @@ export default function DashboardPage() {
 
       {/* 일별 거래 추이 차트 */}
       <div className="rounded-3xl border border-border bg-bg-surface p-8 shadow-sm">
-        <div className="mb-6">
-          <h3 className="text-xl font-bold text-text-main">일별 거래 추이</h3>
-          <p className="text-text-muted mt-1 text-sm">
-            최근 10일간 거래 상태 현황
-          </p>
-        </div>
-        <DashboardChart payments={payments} />
+        <h3 className="text-xl font-bold text-text-main mb-8">
+          일별 거래 추이
+        </h3>
+        <DashboardChart payments={payments} isLoading={isLoading} />
       </div>
 
       {/* 최근 거래 내역 */}
@@ -128,14 +124,25 @@ export default function DashboardPage() {
         <div className="mb-6">
           <h3 className="text-xl font-bold text-text-main">최근 거래 내역</h3>
           <p className="text-text-muted mt-1 text-sm">
-            최신 5건의 결제 거래를 확인하세요
+            최신 결제 거래를 확인하세요
           </p>
-          <p className="text-text-main mt-3 text-lg">
-            총 <span className="font-bold">{totalCount}</span>건의 거래
-          </p>
+          {!isLoading && (
+            <p className="text-text-main mt-3 text-lg">
+              총 <span className="font-bold">{totalCount}</span>건의 거래
+            </p>
+          )}
         </div>
+
         <div className="space-y-4">
-          {recentPayments.length === 0 ? (
+          {isLoading ? (
+            // 로딩 스켈레톤 UI
+            [...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-[100px] w-full rounded-2xl border border-border bg-bg-sub/30 animate-pulse"
+              />
+            ))
+          ) : recentPayments.length === 0 ? (
             <p className="text-text-muted text-sm py-4">
               최근 거래 내역이 없습니다.
             </p>
@@ -170,6 +177,7 @@ export default function DashboardPage() {
                     </span>
                   </div>
                 </div>
+
                 <div className="flex items-center justify-end gap-1">
                   <span className="font-bold text-xl text-text-main">
                     ₩{parseInt(p.amount).toLocaleString()}

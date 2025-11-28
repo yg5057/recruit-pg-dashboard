@@ -12,11 +12,19 @@ import {
 import { Payment } from "@/types";
 import { useMemo } from "react";
 
-export default function DashboardChart({ payments }: { payments: Payment[] }) {
+interface DashboardChartProps {
+  payments: Payment[];
+  isLoading?: boolean;
+}
+
+export default function DashboardChart({
+  payments,
+  isLoading = false,
+}: DashboardChartProps) {
   const chartData = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const grouped = payments.reduce((acc: any, curr) => {
-      const date = curr.paymentAt.split("T")[0];
+      const date = curr.paymentAt.split("T")[0]; // YYYY-MM-DD 추출
       if (curr.status === "SUCCESS") {
         const amount = parseFloat(curr.amount);
         if (!acc[date]) acc[date] = 0;
@@ -33,8 +41,26 @@ export default function DashboardChart({ payments }: { payments: Payment[] }) {
       }));
   }, [payments]);
 
+  if (isLoading) {
+    return (
+      <div className="h-[350px] w-full min-h-[350px] rounded-2xl bg-bg-sub/50 animate-pulse flex items-center justify-center">
+        <span className="text-text-muted text-sm">
+          차트 데이터를 불러오는 중...
+        </span>
+      </div>
+    );
+  }
+
+  if (!chartData || chartData.length === 0) {
+    return (
+      <div className="flex h-[350px] w-full min-h-[350px] items-center justify-center rounded-2xl border border-dashed border-border bg-bg-page/50 text-sm text-text-muted">
+        표시할 거래 데이터가 없습니다.
+      </div>
+    );
+  }
+
   return (
-    <div className="h-[350px] w-full">
+    <div className="h-[350px] w-full min-h-[350px] min-w-0">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={chartData}
