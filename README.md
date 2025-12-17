@@ -51,7 +51,7 @@ npm run dev
 - 프로젝트 루트 경로에 `.env` 파일을 생성하고 아래 내용을 작성해 주세요.
 
 ```env
-NEXT_PUBLIC_API_URL=https://recruit.paysbypays.com/api/v1
+NEXT_PUBLIC_API_URL=
 ```
 
 ### 5.1. 필수 구현 페이지
